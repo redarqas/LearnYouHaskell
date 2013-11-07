@@ -1,5 +1,6 @@
 -- Monad gives an answer to how flatMap a data structure 
 import Control.Monad
+import Control.Applicative
 
 class JMonad m where 
     jreturn :: a -> m a
@@ -71,6 +72,21 @@ sevensOnly = do
     return x
 -- list comprhension is a syntaxic sugar for list Monad
 sevensOnly2 = [x | x <- [1..50], '7' `elem` show x]
+
+-- Generalize lifting with monads
+
+sum3 :: (Num a) => a -> a -> a -> a
+sum3 x y z = x + y + z
+
+applLift = sum3 <$> (Just 3)
+                <*> (Just 3)
+                <*> (Just 3)
+
+genLiftrs = sum3 `liftM` (Just 3)
+                  `ap` (Just 3)
+                  `ap` (Just 3)
+
+-- MonadPlus use case
 
 
 
